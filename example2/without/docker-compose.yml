@@ -1,0 +1,20 @@
+services:
+  service2:
+    build:
+      context: ./service2
+    container_name: service2-without
+    expose:
+      - "5000"
+    ports:
+      - "5101:5000"
+
+  service1:
+    build:
+      context: ./service1
+    container_name: service1-without
+    environment:
+      SERVICE2_URL: http://service2:5000/
+    depends_on:
+      - service2
+    ports:
+      - "5100:5000"
